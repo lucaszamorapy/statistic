@@ -1,27 +1,14 @@
 import './style.css'
 import fetchData from './fetchData.js'
-
-type TransacaoPagamento = "Boleto" | "Cartão de Crédito"
-type TransacaoStatus = "Paga" | "Recusada pela operadora de cartão" | "Aguardando pagamento" | "Estornado"
-
-interface TransacaoAPI {
-  Nome: string;
-  ID: number;
-  Data: string;
-  Status: TransacaoStatus;
-  Email: string;
-  ["Valor (R$)"]: string;
-  ["Forma de Pagamento"]: TransacaoPagamento;
-  ["Cliente Novo"]: number
-}
+import normalizarTransacao from './normalizarTransacao.js'
 
 async function handleData() {
-  const data = await fetchData<TransacaoAPI[]>("https://api.origamid.dev/json/transacoes.json")
-  if (data) {
-    let nomes = ''
-    data.map((item) => nomes += `<p>${item.Nome}</p>`)
-    document.querySelector<HTMLDivElement>('#teste')!.innerHTML = nomes
-  }
+  const data = await fetchData<TransacaoAPI[]>("https://api.origamid.dev/json/transacoes.json?")
+  if (!data) return
+  let transacao = ''
+  const newData = data.map(normalizarTransacao)
+  transacao += newData.map((item) => item.moeda)
+  document.querySelector<HTMLDivElement>('#teste')!.innerHTML = transacao
 }
 
 handleData()
