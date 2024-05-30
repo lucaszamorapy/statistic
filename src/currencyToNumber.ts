@@ -3,7 +3,7 @@
  * 
 
  */
-export default function moedaParaNumero(moeda: string): number | null {
+export default function currencyToNumber(moeda: string): number | null {
   // Remove os pontos usados como separadores de milhar
   const numero = Number(moeda.replaceAll(".", "").replace(",", "."));
 

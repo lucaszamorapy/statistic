@@ -1,15 +1,14 @@
 import './style.css'
 import fetchData from './fetchData.js'
-import normalizarTransacao from './normalizarTransacao.js'
+import normalTransition from './normalTransition.js'
 
 async function handleData() {
   const data = await fetchData<TransacaoAPI[]>("https://api.origamid.dev/json/transacoes.json?")
   if (!data) return
-  let transacao = ''
-  const newData = data.map(normalizarTransacao)
-  transacao += newData.map((item) => item.moeda)
-  document.querySelector<HTMLDivElement>('#teste')!.innerHTML = transacao
+  const transacao = data.map(normalTransition)
+  console.log(transacao)
 }
+
 
 handleData()
 
