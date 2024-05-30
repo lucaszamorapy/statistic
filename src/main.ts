@@ -29,6 +29,10 @@ function preencherEstatisticas(transacoes: Transacao[]): void {
   if (totalElement) {
     totalElement.innerText = data.total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
   }
+  const diaElement = document.querySelector<HTMLElement>("#dia span")
+  if (diaElement) {
+    diaElement.innerText = data.melhorDia[0]
+  }
 }
 
 function preencherTabela(transacoes: Transacao[]): void {
@@ -53,6 +57,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <p id="total">Total: <span></span></p>
   <div id="pagamento"></div>
   <div id="status"></div>
+  <p id="dia">Dia com mais vendas: <span></span></p>
   <h2>Dados</h2>
    <table id="transacoes">
     <thead>
